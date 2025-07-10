@@ -1,4 +1,5 @@
 require("config.lazy")
+vim.g.mapleader = " "
 
 vim.opt.number = true
 vim.o.relativenumber = true
@@ -30,4 +31,5 @@ require("gruvbox").setup({
   dim_inactive = false,
   transparent_mode = false,
 })
+
 vim.cmd("colorscheme catppuccin")
