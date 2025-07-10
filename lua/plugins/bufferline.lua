@@ -12,8 +12,8 @@ return {
     })
 
     -- Keymaps for bufferline navigation
-    vim.keymap.set("n", "<C-Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
-    vim.keymap.set("n", "<C-S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
+    vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
+    vim.keymap.set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
   end,
 }
 
