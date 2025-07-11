@@ -13,7 +13,7 @@ return {
 
           accept = "<CR>",
           refresh = "gr",
-          open = "<leader>I",
+          open = "<C-I>",
         },
         layout = {
           position = "bottom",
