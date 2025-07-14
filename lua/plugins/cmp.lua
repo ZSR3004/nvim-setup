@@ -2,16 +2,21 @@ return {
   "hrsh7th/nvim-cmp",
   version = false,
   event = "InsertEnter",
+
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
+    "onsails/lspkind.nvim",
+    "zbirenbaum/copilot-cmp", -- Added for Copilot integration
   },
   opts = function()
     vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+
     local cmp = require("cmp")
-    local defaults = require("cmp.config.default")()
+    local lspkind = require("lspkind")
     local luasnip = require("luasnip")
+    local defaults = require("cmp.config.default")()
 
     local has_words_before = function()
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -54,49 +59,41 @@ return {
       mapping = cmp.mapping.preset.insert({
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-
         ["<C-Space>"] = cmp.mapping.complete(),
-
-        ["<S-j>"] = cmp.mapping.select_next_item(),   -- Shift + j for next
-        ["<S-k>"] = cmp.mapping.select_prev_item(),   -- Shift + k for prev
-
-        ["<Tab>"] = cmp.mapping.confirm({ select = true }),  -- Tab to confirm
-
+        ["<S-j>"] = cmp.mapping.select_next_item(),
+        ["<S-k>"] = cmp.mapping.select_prev_item(),
+        ["<Tab>"] = cmp.mapping.confirm({ select = true }),
         ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-
         ["<S-CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
         ["<C-CR>"] = function(fallback)
-            cmp.abort()
-            fallback()
+          cmp.abort()
+          fallback()
         end,
- }),
-
+      }),
       sources = cmp.config.sources({
+        { name = "copilot", group_index = 2 },
+
         { name = "nvim_lsp" },
         { name = "path" },
       }, {
         { name = "buffer" },
       }),
       formatting = {
-        format = function(_, item)
-          if kind_icons[item.kind] then
-            item.kind = kind_icons[item.kind] .. " " .. item.kind
-          end
-          return item
-        end,
-      },
+        format = lspkind.cmp_format({
+          mode = "symbol",
+          max_width = 50,
+          symbol_map = { Copilot = "" },
 
+        }),
+      },
       experimental = {
         ghost_text = {
+
           hl_group = "CmpGhostText",
         },
-
       },
       sorting = defaults.sorting,
     }
-
   end,
 }
-
-
 
