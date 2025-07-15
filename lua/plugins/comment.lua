@@ -1,1 +1,5 @@
-return {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'}
+return {
+     'numToStr/Comment.nvim',
+     version = "*", 
+     dependencies = 'nvim-tree/nvim-web-devicons'
+}
